@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
 import 'const_key.dart';
+import 'start.dart';
+import 'todo.dart';
 
 void main() {
   Gemini.init(apiKey: apiKey);
@@ -14,9 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/start': (context) => const MyHomePage(),
+        '/home': (context) => const HomePage(),
+        '/todo': (context) => ToDoListPage(),
+      },
       title: 'Flutter Demo',
-      home: HomePage(),
+      home: const MyHomePage(),
     );
   }
 }

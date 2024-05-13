@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Gemini Chat",
+          "Chat",
         ),
       ),
       body: _buildUI(),
