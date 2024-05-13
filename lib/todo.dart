@@ -107,6 +107,50 @@ class _ToDoListPageState extends State<ToDoListPage> {
     );
   }
 
+  void _showAddTaskDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Add Task"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _taskNameController,
+                decoration: InputDecoration(labelText: 'Task Name'),
+              ),
+              TextField(
+                controller: _taskDescriptionController,
+                decoration: InputDecoration(labelText: 'Task Description'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (_taskNameController.text.isNotEmpty) {
+                  _addTask(
+                    _taskNameController.text,
+                    _taskDescriptionController.text,
+                  );
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,35 +159,6 @@ class _ToDoListPageState extends State<ToDoListPage> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _taskNameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Name',
-                  ),
-                ),
-                TextField(
-                  controller: _taskDescriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Description',
-                  ),
-                ),
-                const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_taskNameController.text.isNotEmpty) {
-                      _addTask(_taskNameController.text,
-                          _taskDescriptionController.text);
-                    }
-                  },
-                  child: const Text('Add Task'),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: _tasks.length,
@@ -179,6 +194,13 @@ class _ToDoListPageState extends State<ToDoListPage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddTaskDialog(context);
+        },
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
