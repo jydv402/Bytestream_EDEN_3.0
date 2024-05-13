@@ -21,9 +21,9 @@ class _HomePageState extends State<HomePage> {
   ChatUser currentUser = ChatUser(id: "0", firstName: "User");
   ChatUser geminiUser = ChatUser(
     id: "1",
-    firstName: "Gemini",
+    firstName: "Lina",
     profileImage:
-        "https://seeklogo.com/images/G/google-gemini-logo-A5787B2669-seeklogo.com.png",
+        "https://i1.wp.com/blog.masprospectos.mx/wp-content/uploads/2020/09/giphy-1.gif?resize=480%2C480&ssl=1",
   );
   @override
   Widget build(BuildContext context) {
