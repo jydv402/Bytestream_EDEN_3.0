@@ -11,7 +11,7 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
+              ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/todo');
                   },
@@ -19,14 +19,15 @@ class MyHomePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
-                  child: const Text("Chat")),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/home');
+        },
+        child: const Icon(Icons.chat_bubble_outline_rounded),
       ),
     );
   }
