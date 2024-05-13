@@ -10,7 +10,7 @@ class MyHomePage extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('This is a sample'),
+          Text('This is a '),
         ],
       )),
     );
