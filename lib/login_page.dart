@@ -11,9 +11,17 @@ class LoginPage extends StatelessWidget {
 
   // sign user in method
   void signUserIn(BuildContext context) {
-    if (usernameController.text == "bytestream" &&
-        passwordController.text == "143143") {
+    if (usernameController.text == "bytestream" ||
+        usernameController.text == "bytestream " &&
+            passwordController.text == "143143") {
       Navigator.pushNamed(context, '/start');
+
+      usernameController.clear();
+      passwordController.clear();
+    } else {
+      //show a snackbar
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Invalid Credentials')));
     }
   }
 

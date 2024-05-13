@@ -22,7 +22,7 @@ class MainButton extends StatelessWidget {
           Navigator.pushNamed(context, pageRoute);
         },
         child: Container(
-          padding: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.only(left: 25),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(28), color: color),
@@ -36,13 +36,13 @@ class MainButton extends StatelessWidget {
                 Text(pageName,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
+                        color: Colors.black,
+                        fontSize: 34,
                         fontWeight: FontWeight.bold)),
                 const SizedBox(height: 6),
                 Text(pageDesc,
                     textAlign: TextAlign.left,
-                    style: const TextStyle(color: Colors.white, fontSize: 14)),
+                    style: const TextStyle(color: Colors.black, fontSize: 15)),
               ]),
         ),
       ),

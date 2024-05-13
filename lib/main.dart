@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
 import 'const_key.dart';
+import 'dr.dart';
 import 'login_page.dart';
 import 'start.dart';
 import 'todo.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/todo': (context) => ToDoListPage(),
         '/mood': (context) => mood_track(),
         '/login': (context) => LoginPage(),
+        '/dr': (context) => const MyDr(),
       },
       title: 'Flutter Demo',
       home: LoginPage(),

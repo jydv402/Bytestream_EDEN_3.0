@@ -7,6 +7,24 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: const Text("Logout",
+                  style: TextStyle(color: Colors.red, fontSize: 18)),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text(
           "Name",
@@ -28,7 +46,7 @@ class MyHomePage extends StatelessWidget {
           ),
           MainButton(
             color: Colors.purple.shade200,
-            pageName: "Chat with me",
+            pageName: "Chat with Lina",
             pageDesc: "Personal support for your worries",
             pageRoute: "/home",
           ),
@@ -40,15 +58,9 @@ class MyHomePage extends StatelessWidget {
           ),
           MainButton(
             color: Colors.red.shade200,
-            pageName: "Seek Med Help",
+            pageName: "Seek assistance",
             pageDesc: "Book an appointment with the experts",
-            pageRoute: "/login",
-          ),
-          MainButton(
-            color: Colors.green.shade200,
-            pageName: "Login",
-            pageDesc: "Login",
-            pageRoute: "/login",
+            pageRoute: "/dr",
           ),
           const SizedBox(
             height: 50,

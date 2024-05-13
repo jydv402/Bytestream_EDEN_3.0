@@ -170,12 +170,15 @@ class _ToDoListPageState extends State<ToDoListPage> {
                     }
                   }
                 },
-                child: Text(
-                  _dueDateTime != null
-                      ? 'Due: ${DateFormat.yMd().add_jm().format(_dueDateTime!)}'
-                      : 'Set Due Date and Time',
-                  style: TextStyle(
-                    color: _dueDateTime != null ? Colors.blue : Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Text(
+                    _dueDateTime != null
+                        ? 'Due: ${DateFormat.yMd().add_jm().format(_dueDateTime!)}'
+                        : 'Set Due Date and Time',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),
@@ -222,7 +225,11 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('To-Do List'),
+        title: const Text(
+          "Work Planner",
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -230,46 +237,68 @@ class _ToDoListPageState extends State<ToDoListPage> {
             child: ListView.builder(
               itemCount: _tasks.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_tasks[index].name),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_tasks[index].description),
-                      if (_tasks[index].dueDateTime != null)
-                        Text(
-                            'Due: ${DateFormat.yMd().add_jm().format(_tasks[index].dueDateTime!)}'),
-                    ],
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      _toggleTask(index);
-                    },
-                    child: Container(
-                      width: 24.0,
-                      height: 24.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _tasks[index].completed
-                            ? Colors.green
-                            : Colors.transparent,
-                        border: Border.all(color: Colors.black),
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(26),
+                        color: Colors.blue[100]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: ListTile(
+                        title: Text(
+                          _tasks[index].name,
+                          style: const TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _tasks[index].description,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            if (_tasks[index].dueDateTime != null)
+                              Text(
+                                'Due: ${DateFormat.yMd().add_jm().format(_tasks[index].dueDateTime!)}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                          ],
+                        ),
+                        trailing: GestureDetector(
+                          onTap: () {
+                            _toggleTask(index);
+                          },
+                          child: Container(
+                            width: 24.0,
+                            height: 24.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _tasks[index].completed
+                                  ? Colors.green
+                                  : Colors.transparent,
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: _tasks[index].completed
+                                ? const Icon(Icons.check, color: Colors.white)
+                                : null,
+                          ),
+                        ),
+                        onLongPress: () {
+                          _deleteTask(index);
+                        },
                       ),
-                      child: _tasks[index].completed
-                          ? const Icon(Icons.check, color: Colors.white)
-                          : null,
                     ),
                   ),
-                  onLongPress: () {
-                    _deleteTask(index);
-                  },
                 );
               },
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.large(
         backgroundColor: Colors.blue.shade200,
         onPressed: () {
           _showAddTaskDialog(context);
