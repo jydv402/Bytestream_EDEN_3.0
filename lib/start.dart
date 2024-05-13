@@ -7,10 +7,20 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Name",
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 50,
+          ),
           MainButton(
             color: Colors.blue.shade200,
             pageName: "Work Planner",
@@ -22,6 +32,18 @@ class MyHomePage extends StatelessWidget {
             pageName: "Chat with me",
             pageDesc: "Get personal support for your worries",
             pageRoute: "/home",
+          ),
+          MainButton(
+            color: Colors.green.shade200,
+            pageName: "Mood Tracker",
+            pageDesc: "An insight on your mood over the time",
+            pageRoute: "/mood",
+          ),
+          MainButton(
+            color: Colors.green.shade200,
+            pageName: "Login",
+            pageDesc: "Login",
+            pageRoute: "/mood",
           ),
         ],
       )),

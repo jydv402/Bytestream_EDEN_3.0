@@ -1,5 +1,9 @@
 import 'package:bytestream/home.dart';
+<<<<<<< Updated upstream
 import 'package:bytestream/login_page.dart';
+=======
+import 'package:bytestream/mood_track.dart';
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
@@ -23,7 +27,11 @@ class MyApp extends StatelessWidget {
         '/start': (context) => const MyHomePage(),
         '/home': (context) => const HomePage(),
         '/todo': (context) => ToDoListPage(),
+<<<<<<< Updated upstream
         '/login': (context) => LoginPage(),
+=======
+        '/mood': (context) => const MyMood(),
+>>>>>>> Stashed changes
       },
       title: 'Flutter Demo',
       home: const MyHomePage(),

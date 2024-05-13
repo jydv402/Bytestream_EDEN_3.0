@@ -29,10 +29,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text(
           "Chat",
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
       body: _buildUI(),
     );
