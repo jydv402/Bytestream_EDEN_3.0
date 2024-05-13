@@ -163,10 +163,15 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('To-Do List'),
+        title: const Text(
+          "Work Planner",
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: [
+          const SizedBox(height: 50),
           Expanded(
             child: ListView.builder(
               itemCount: _tasks.length,

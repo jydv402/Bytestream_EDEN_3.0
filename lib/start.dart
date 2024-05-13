@@ -15,8 +15,7 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+          child: ListView(
         children: [
           const SizedBox(
             height: 50,
@@ -40,10 +39,16 @@ class MyHomePage extends StatelessWidget {
             pageRoute: "/mood",
           ),
           MainButton(
+            color: Colors.red.shade200,
+            pageName: "Seek Med Help",
+            pageDesc: "Book an appointment with the experts",
+            pageRoute: "/login",
+          ),
+          MainButton(
             color: Colors.green.shade200,
             pageName: "Login",
             pageDesc: "Login",
-            pageRoute: "/mood",
+            pageRoute: "/login",
           ),
         ],
       )),
