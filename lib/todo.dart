@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Task {
   String name;
@@ -14,23 +15,49 @@ class ToDoListPage extends StatefulWidget {
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
-  final List<Task> _tasks = [];
+  List<Task> _tasks = [];
+  late SharedPreferences _prefs;
 
   final TextEditingController _taskNameController = TextEditingController();
   final TextEditingController _taskDescriptionController =
       TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  void _loadTasks() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _tasks = (_prefs.getStringList('tasks') ?? []).map((taskString) {
+        List<String> taskData = taskString.split('|');
+        return Task(taskData[0], taskData[1], completed: taskData[2] == 'true');
+      }).toList();
+    });
+  }
+
+  void _saveTasks() {
+    List<String> tasksData = _tasks.map((task) {
+      return '${task.name}|${task.description}|${task.completed}';
+    }).toList();
+    _prefs.setStringList('tasks', tasksData);
+  }
 
   void _addTask(String name, String description) {
     setState(() {
       _tasks.add(Task(name, description));
       _taskNameController.clear();
       _taskDescriptionController.clear();
+      _saveTasks();
     });
   }
 
   void _toggleTask(int index) {
     setState(() {
       _tasks[index].completed = !_tasks[index].completed;
+      _saveTasks();
     });
   }
 
@@ -52,6 +79,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
               onPressed: () {
                 setState(() {
                   _tasks.removeAt(index);
+                  _saveTasks();
                 });
                 Navigator.of(context).pop();
               },
