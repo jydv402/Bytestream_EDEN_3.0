@@ -32,6 +32,8 @@ class ToDoListPage extends StatefulWidget {
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
+  Color color = Colors.black;
+
   final List<Task> _tasks = [];
   final SharedPreferencesHelper _prefsHelper = SharedPreferencesHelper();
 
@@ -89,7 +91,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("Cancel"),
+              child: Text("Cancel", style: TextStyle(color: color)),
             ),
             TextButton(
               onPressed: () {
@@ -99,7 +101,10 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 });
                 Navigator.of(context).pop();
               },
-              child: const Text("Delete"),
+              child: Text(
+                "Delete",
+                style: TextStyle(color: color),
+              ),
             ),
           ],
         );
@@ -131,7 +136,10 @@ class _ToDoListPageState extends State<ToDoListPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: color),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -143,7 +151,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                   Navigator.of(context).pop();
                 }
               },
-              child: Text('Add'),
+              child: Text('Add', style: TextStyle(color: color)),
             ),
           ],
         );
@@ -195,10 +203,11 @@ class _ToDoListPageState extends State<ToDoListPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue.shade200,
         onPressed: () {
           _showAddTaskDialog(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
