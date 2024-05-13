@@ -14,10 +14,11 @@ class ToDoListPage extends StatefulWidget {
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
-  List<Task> _tasks = [];
+  final List<Task> _tasks = [];
 
-  TextEditingController _taskNameController = TextEditingController();
-  TextEditingController _taskDescriptionController = TextEditingController();
+  final TextEditingController _taskNameController = TextEditingController();
+  final TextEditingController _taskDescriptionController =
+      TextEditingController();
 
   void _addTask(String name, String description) {
     setState(() {
@@ -38,14 +39,14 @@ class _ToDoListPageState extends State<ToDoListPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirm"),
-          content: Text("Are you sure you want to delete this task?"),
+          title: const Text("Confirm"),
+          content: const Text("Are you sure you want to delete this task?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
@@ -54,7 +55,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                 });
                 Navigator.of(context).pop();
               },
-              child: Text("Delete"),
+              child: const Text("Delete"),
             ),
           ],
         );
@@ -66,7 +67,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('To-Do List'),
+        title: const Text('To-Do List'),
       ),
       body: Column(
         children: [
@@ -76,17 +77,17 @@ class _ToDoListPageState extends State<ToDoListPage> {
               children: [
                 TextField(
                   controller: _taskNameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Task Name',
                   ),
                 ),
                 TextField(
                   controller: _taskDescriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Task Description',
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () {
                     if (_taskNameController.text.isNotEmpty) {
@@ -94,7 +95,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                           _taskDescriptionController.text);
                     }
                   },
-                  child: Text('Add Task'),
+                  child: const Text('Add Task'),
                 ),
               ],
             ),
@@ -121,7 +122,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                         border: Border.all(color: Colors.black),
                       ),
                       child: _tasks[index].completed
-                          ? Icon(Icons.check, color: Colors.white)
+                          ? const Icon(Icons.check, color: Colors.white)
                           : null,
                     ),
                   ),
