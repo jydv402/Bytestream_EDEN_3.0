@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class Task {
   String name;
   String description;
   bool completed;
+  DateTime? dueDateTime; // New field for due date and time
 
-  Task(this.name, this.description, {this.completed = false});
+  Task(this.name, this.description, {this.completed = false, this.dueDateTime});
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'description': description,
       'completed': completed,
+      'dueDateTime':
+          dueDateTime?.toIso8601String(), // Convert DateTime to string
     };
   }
 
@@ -22,6 +26,9 @@ class Task {
       json['name'],
       json['description'],
       completed: json['completed'],
+      dueDateTime: json['dueDateTime'] != null
+          ? DateTime.parse(json['dueDateTime']) // Parse string to DateTime
+          : null,
     );
   }
 }
@@ -63,12 +70,13 @@ class _ToDoListPageState extends State<ToDoListPage> {
     await _prefsHelper.saveTasks(tasksJson);
   }
 
-  void _addTask(String name, String description) {
+  void _addTask(String name, String description, {DateTime? dueDateTime}) {
     setState(() {
-      _tasks.add(Task(name, description));
+      _tasks.add(Task(name, description, dueDateTime: dueDateTime));
       _saveTasks();
       _taskNameController.clear();
       _taskDescriptionController.clear();
+      _dueDateTime = null; // Clear due date and time after adding the task
     });
   }
 
@@ -112,12 +120,17 @@ class _ToDoListPageState extends State<ToDoListPage> {
     );
   }
 
-  void _showAddTaskDialog(BuildContext context) {
+  DateTime? _dueDateTime;
+  void _showAddTaskDialog(BuildContext context, {Task? task}) {
+    _taskNameController.text = task?.name ?? '';
+    _taskDescriptionController.text = task?.description ?? '';
+    _dueDateTime = task?.dueDateTime;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Add Task"),
+          title: Text(task == null ? "Add Task" : "Edit Task"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -128,6 +141,43 @@ class _ToDoListPageState extends State<ToDoListPage> {
               TextField(
                 controller: _taskDescriptionController,
                 decoration: InputDecoration(labelText: 'Task Description'),
+              ),
+              SizedBox(height: 8),
+              InkWell(
+                onTap: () async {
+                  final DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: _dueDateTime ?? DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2100),
+                  );
+                  if (picked != null) {
+                    final TimeOfDay? timePicked = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.fromDateTime(
+                          _dueDateTime ?? DateTime.now()),
+                    );
+                    if (timePicked != null) {
+                      setState(() {
+                        _dueDateTime = DateTime(
+                          picked.year,
+                          picked.month,
+                          picked.day,
+                          timePicked.hour,
+                          timePicked.minute,
+                        );
+                      });
+                    }
+                  }
+                },
+                child: Text(
+                  _dueDateTime != null
+                      ? 'Due: ${DateFormat.yMd().add_jm().format(_dueDateTime!)}'
+                      : 'Set Due Date and Time',
+                  style: TextStyle(
+                    color: _dueDateTime != null ? Colors.blue : Colors.grey,
+                  ),
+                ),
               ),
             ],
           ),
@@ -144,14 +194,23 @@ class _ToDoListPageState extends State<ToDoListPage> {
             TextButton(
               onPressed: () {
                 if (_taskNameController.text.isNotEmpty) {
-                  _addTask(
-                    _taskNameController.text,
-                    _taskDescriptionController.text,
-                  );
+                  if (task == null) {
+                    _addTask(
+                      _taskNameController.text,
+                      _taskDescriptionController.text,
+                      dueDateTime: _dueDateTime,
+                    );
+                  } else {
+                    task.name = _taskNameController.text;
+                    task.description = _taskDescriptionController.text;
+                    task.dueDateTime = _dueDateTime;
+                    _saveTasks();
+                  }
                   Navigator.of(context).pop();
                 }
               },
-              child: Text('Add', style: TextStyle(color: color)),
+              child: Text(task == null ? 'Add' : 'Update',
+                  style: TextStyle(color: color)),
             ),
           ],
         );
@@ -163,22 +222,25 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Work Planner",
-          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
+        title: const Text('To-Do List'),
       ),
       body: Column(
         children: [
-          const SizedBox(height: 50),
           Expanded(
             child: ListView.builder(
               itemCount: _tasks.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(_tasks[index].name),
-                  subtitle: Text(_tasks[index].description),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_tasks[index].description),
+                      if (_tasks[index].dueDateTime != null)
+                        Text(
+                            'Due: ${DateFormat.yMd().add_jm().format(_tasks[index].dueDateTime!)}'),
+                    ],
+                  ),
                   trailing: GestureDetector(
                     onTap: () {
                       _toggleTask(index);
