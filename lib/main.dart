@@ -1,4 +1,5 @@
 import 'package:bytestream/home.dart';
+import 'package:bytestream/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/start': (context) => const MyHomePage(),
         '/home': (context) => const HomePage(),
         '/todo': (context) => ToDoListPage(),
+        '/login': (context) => LoginPage(),
       },
       title: 'Flutter Demo',
       home: const MyHomePage(),
