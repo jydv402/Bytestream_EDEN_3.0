@@ -1,3 +1,4 @@
+import 'package:bytestream/assets/buttons.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -6,29 +7,24 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
+      body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/todo');
-                  },
-                  child: const Text("Work Planner")),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MainButton(
+            color: Colors.blue.shade200,
+            pageName: "Work Planner",
+            pageDesc: "Plan all your works",
+            pageRoute: "/todo",
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/home');
-        },
-        child: const Icon(Icons.chat_bubble_outline_rounded),
-      ),
+          MainButton(
+            color: Colors.purple.shade200,
+            pageName: "Chat with me",
+            pageDesc: "Get personal support for your worries",
+            pageRoute: "/home",
+          ),
+        ],
+      )),
     );
   }
 }
