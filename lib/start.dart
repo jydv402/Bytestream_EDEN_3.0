@@ -29,7 +29,7 @@ class MyHomePage extends StatelessWidget {
           MainButton(
             color: Colors.purple.shade200,
             pageName: "Chat with me",
-            pageDesc: "Get personal support for your worries",
+            pageDesc: "Personal support for your worries",
             pageRoute: "/home",
           ),
           MainButton(
@@ -50,6 +50,9 @@ class MyHomePage extends StatelessWidget {
             pageDesc: "Login",
             pageRoute: "/login",
           ),
+          const SizedBox(
+            height: 50,
+          )
         ],
       )),
     );

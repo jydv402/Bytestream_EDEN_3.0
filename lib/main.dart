@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
       },
       title: 'Flutter Demo',
-      home: const MyHomePage(),
+      home: LoginPage(),
     );
   }
 }
