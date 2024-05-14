@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class mood_track extends StatelessWidget {
   @override
@@ -21,6 +22,24 @@ class MoodTrackerHomePage extends StatefulWidget {
 
 class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
   List<MoodEntry> _moodEntries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMoodEntries();
+  }
+
+  void _loadMoodEntries() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String>? entriesJson = prefs.getStringList('mood_entries');
+    if (entriesJson != null) {
+      setState(() {
+        _moodEntries = entriesJson.map((entryJson) {
+          return MoodEntry.fromJson(entryJson);
+        }).toList();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +91,9 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
 
   void _addMoodEntry(BuildContext context) async {
     final today = DateTime.now();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Check if an entry already exists for today
     if (_moodEntries.isEmpty || _moodEntries.last.date.day != today.day) {
       String selectedMood = MoodEntry.moodOptions.first;
       String journalEntry = '';
@@ -119,16 +141,20 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
                 child: Text('Cancel'),
               ),
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (selectedMood != null) {
+                    final newEntry = MoodEntry(
+                      mood: selectedMood,
+                      date: today,
+                      journalEntry: journalEntry,
+                    );
                     setState(() {
-                      _moodEntries.add(
-                        MoodEntry(
-                            mood: selectedMood,
-                            date: today,
-                            journalEntry: journalEntry),
-                      );
+                      _moodEntries.add(newEntry);
                     });
+                    prefs.setStringList(
+                      'mood_entries',
+                      _moodEntries.map((entry) => entry.toJson()).toList(),
+                    );
                     Navigator.pop(context);
                   }
                 },
@@ -165,8 +191,11 @@ class MoodEntry {
   final DateTime date;
   final String journalEntry; // Added property for journal entry
 
-  MoodEntry(
-      {required this.mood, required this.date, required this.journalEntry});
+  MoodEntry({
+    required this.mood,
+    required this.date,
+    required this.journalEntry,
+  });
 
   static List<String> moodOptions = [
     'Happy',
@@ -175,6 +204,13 @@ class MoodEntry {
     'Anxious',
     // Add more mood options as needed
   ];
+
+  MoodEntry.fromJson(String json)
+      : mood = json.split(',')[0],
+        date = DateTime.parse(json.split(',')[1]),
+        journalEntry = json.split(',')[2];
+
+  String toJson() => '$mood,${date.toString()},$journalEntry';
 }
 
 class MoodEntryDetailPage extends StatelessWidget {
