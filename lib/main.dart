@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/todo': (context) => ToDoListPage(),
         '/mood': (context) => mood_track(),
         '/login': (context) => LoginPage(),
-        '/dr': (context) => const MyDr(),
+        '/dr': (context) => MyDr(),
       },
       title: 'Flutter Demo',
       home: LoginPage(),
