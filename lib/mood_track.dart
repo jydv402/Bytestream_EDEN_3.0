@@ -174,7 +174,7 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
                     _moodEntries.map((entry) => entry.toJson()).toList(),
                   );
                   Navigator.pop(context);
-                                },
+                },
                 child: const Text('Add Entry'),
               ),
             ],
@@ -328,7 +328,7 @@ class MoodEntryDetailPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 24, right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -354,10 +354,15 @@ class MoodEntryDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.green.shade100),
+              ),
               onPressed: () {
                 _showSuggestions(context, moodEntry);
               },
-              child: const Text('Get Suggestions'),
+              child: const Text('Get Suggestions',
+                  style: TextStyle(color: Colors.black)),
             ),
           ],
         ),
@@ -385,7 +390,7 @@ class MoodEntryDetailPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Close'),
+              child: const Text('Close', style: TextStyle(color: Colors.black)),
             ),
           ],
         );
@@ -425,7 +430,7 @@ class _EditMoodEntryPageState extends State<EditMoodEntryPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
