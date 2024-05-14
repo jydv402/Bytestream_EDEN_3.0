@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/start': (context) => const MyHomePage(),
         '/home': (context) => const HomePage(),
         '/todo': (context) => ToDoListPage(),
-        '/mood': (context) => mood_track(),
+        '/mood': (context) => const MoodTrackerHomePage(),
         '/login': (context) => LoginPage(),
         '/dr': (context) => const MyDr(),
       },

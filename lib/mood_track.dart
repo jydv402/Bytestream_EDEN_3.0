@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class mood_track extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mood Tracker',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MoodTrackerHomePage(),
-    );
-  }
-}
-
 class MoodTrackerHomePage extends StatefulWidget {
+  const MoodTrackerHomePage({super.key});
+
   @override
   _MoodTrackerHomePageState createState() => _MoodTrackerHomePageState();
 }
@@ -45,7 +33,11 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mood Tracker'),
+        title: const Text(
+          "Mood Tracker",
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,20 +47,39 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
               itemCount: _moodEntries.length,
               itemBuilder: (context, index) {
                 final moodEntry = _moodEntries[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            MoodEntryDetailPage(moodEntry: moodEntry),
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              MoodEntryDetailPage(moodEntry: moodEntry),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(26),
+                          color: Colors.green[100]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: ListTile(
+                          title: Text(
+                            moodEntry.mood,
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            '${moodEntry.date.day} - ${moodEntry.date.month} - ${moodEntry.date.year}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
                       ),
-                    );
-                  },
-                  child: ListTile(
-                    title: Text(moodEntry.mood),
-                    subtitle: Text(
-                      '${moodEntry.date.year}-${moodEntry.date.month}-${moodEntry.date.day}',
                     ),
                   ),
                 );
@@ -76,12 +87,18 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16),
             child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.green.shade100)),
               onPressed: () {
                 _addMoodEntry(context);
               },
-              child: Text('Add Mood Entry'),
+              child: const Text(
+                'Add Mood Entry',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ),
         ],
@@ -222,10 +239,14 @@ class MoodEntryDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mood Entry Detail'),
+        centerTitle: true,
+        title: const Text(
+          'Mood Entry Detail',
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () async {
               final updatedMoodEntry = await Navigator.push(
                 context,
@@ -248,16 +269,17 @@ class MoodEntryDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 50),
             Text(
               'Mood: ${moodEntry.mood}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              'Date: ${moodEntry.date.year}-${moodEntry.date.month}-${moodEntry.date.day}',
+              'Date: ${moodEntry.date.day} - ${moodEntry.date.month} - ${moodEntry.date.year}',
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 30),
             Text(
               'Journal Entry:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -298,14 +320,19 @@ class _EditMoodEntryPageState extends State<EditMoodEntryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Mood Entry'),
+        centerTitle: true,
+        title: const Text(
+          'Edit Mood Entry',
+          style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const SizedBox(height: 50),
+            const Text(
               'Select Your Mood:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
@@ -339,7 +366,8 @@ class _EditMoodEntryPageState extends State<EditMoodEntryPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.large(
+        backgroundColor: Colors.green.shade100,
         onPressed: () {
           // Update moodEntry and pop the screen with result
           final updatedMoodEntry = MoodEntry(
