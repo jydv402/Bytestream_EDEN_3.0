@@ -71,7 +71,7 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
                         child: ListTile(
                           title: Text(
                             moodEntry.mood,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           subtitle: Text(
@@ -121,11 +121,11 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Add Mood Entry'),
+            title: const Text('Add Mood Entry'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Select Your Mood:'),
+                const Text('Select Your Mood:'),
                 DropdownButton<String>(
                   value: selectedMood,
                   onChanged: (value) {
@@ -140,9 +140,9 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
                           ))
                       .toList(),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Journal Your Thoughts',
                     border: OutlineInputBorder(),
                   ),
@@ -157,27 +157,25 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () async {
-                  if (selectedMood != null) {
-                    final newEntry = MoodEntry(
-                      mood: selectedMood,
-                      date: today,
-                      journalEntry: journalEntry,
-                    );
-                    setState(() {
-                      _moodEntries.add(newEntry);
-                    });
-                    prefs.setStringList(
-                      'mood_entries',
-                      _moodEntries.map((entry) => entry.toJson()).toList(),
-                    );
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Add Entry'),
+                  final newEntry = MoodEntry(
+                    mood: selectedMood,
+                    date: today,
+                    journalEntry: journalEntry,
+                  );
+                  setState(() {
+                    _moodEntries.add(newEntry);
+                  });
+                  prefs.setStringList(
+                    'mood_entries',
+                    _moodEntries.map((entry) => entry.toJson()).toList(),
+                  );
+                  Navigator.pop(context);
+                                },
+                child: const Text('Add Entry'),
               ),
             ],
           );
@@ -188,14 +186,14 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Entry already exists'),
-            content: Text('You have already made an entry for today.'),
+            title: const Text('Entry already exists'),
+            content: const Text('You have already made an entry for today.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -225,7 +223,7 @@ void _showSuggestions(BuildContext context, MoodEntry moodEntry) {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       );
@@ -298,7 +296,7 @@ class MoodEntry {
 class MoodEntryDetailPage extends StatelessWidget {
   final MoodEntry moodEntry;
 
-  MoodEntryDetailPage({required this.moodEntry});
+  const MoodEntryDetailPage({super.key, required this.moodEntry});
 
   @override
   Widget build(BuildContext context) {
@@ -337,29 +335,29 @@ class MoodEntryDetailPage extends StatelessWidget {
             const SizedBox(height: 50),
             Text(
               'Mood: ${moodEntry.mood}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Date: ${moodEntry.date.day} - ${moodEntry.date.month} - ${moodEntry.date.year}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               'Journal Entry:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               moodEntry.journalEntry,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _showSuggestions(context, moodEntry);
               },
-              child: Text('Get Suggestions'),
+              child: const Text('Get Suggestions'),
             ),
           ],
         ),
@@ -387,7 +385,7 @@ class MoodEntryDetailPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -399,7 +397,7 @@ class MoodEntryDetailPage extends StatelessWidget {
 class EditMoodEntryPage extends StatefulWidget {
   final MoodEntry moodEntry;
 
-  EditMoodEntryPage({required this.moodEntry});
+  const EditMoodEntryPage({super.key, required this.moodEntry});
 
   @override
   _EditMoodEntryPageState createState() => _EditMoodEntryPageState();
@@ -450,9 +448,9 @@ class _EditMoodEntryPageState extends State<EditMoodEntryPage> {
                       ))
                   .toList(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Edit Your Journal Entry',
                 border: OutlineInputBorder(),
               ),
@@ -477,7 +475,7 @@ class _EditMoodEntryPageState extends State<EditMoodEntryPage> {
           );
           Navigator.pop(context, updatedMoodEntry);
         },
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       ),
     );
   }

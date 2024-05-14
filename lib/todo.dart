@@ -34,6 +34,8 @@ class Task {
 }
 
 class ToDoListPage extends StatefulWidget {
+  const ToDoListPage({super.key});
+
   @override
   _ToDoListPageState createState() => _ToDoListPageState();
 }
@@ -136,13 +138,13 @@ class _ToDoListPageState extends State<ToDoListPage> {
             children: [
               TextField(
                 controller: _taskNameController,
-                decoration: InputDecoration(labelText: 'Task Name'),
+                decoration: const InputDecoration(labelText: 'Task Name'),
               ),
               TextField(
                 controller: _taskDescriptionController,
-                decoration: InputDecoration(labelText: 'Task Description'),
+                decoration: const InputDecoration(labelText: 'Task Description'),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               InkWell(
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
@@ -325,7 +327,7 @@ class SharedPreferencesHelper {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: ToDoListPage(),
   ));
 }

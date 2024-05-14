@@ -1,150 +1,51 @@
-// import 'package:flutter/material.dart';
-
-// class MyDr extends StatelessWidget {
-//   const MyDr({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text(
-//           "Assistance",
-//           style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-//         ),
-//         centerTitle: true,
-//       ),
-//       body: Text("DR"),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyDr());
-}
-
-class Doctor {
-  final String name;
-  final int age;
-  final String qualifications;
-  final String image;
-
-  Doctor({
-    required this.name,
-    required this.age,
-    required this.qualifications,
-    required this.image,
-  });
-}
+import 'assets/experts.dart';
 
 class MyDr extends StatelessWidget {
-  final List<Doctor> doctors = [
-    Doctor(
-      name: "Dr. Alice Smith",
-      age: 40,
-      qualifications: "MD, PhD",
-      image: "doctor1.jpg",
-    ),
-    Doctor(
-      name: "Dr. John Doe",
-      age: 45,
-      qualifications: "MBBS",
-      image: "doctor2.jpg",
-    ),
-    Doctor(
-      name: "Dr. Emily Johnson",
-      age: 38,
-      qualifications: "PsyD",
-      image: "doctor3.jpg",
-    ),
-    Doctor(
-      name: "Dr. Michael Brown",
-      age: 50,
-      qualifications: "MD",
-      image: "doctor4.jpg",
-    ),
-    Doctor(
-      name: "Dr. Sophia Lee",
-      age: 42,
-      qualifications: "PhD",
-      image: "doctor5.jpg",
-    ),
-  ];
+  const MyDr({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Doctor Directory'),
+          title: const Text(
+            "Assistance",
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
         ),
-        body: ListView.builder(
-          itemCount: doctors.length,
-          itemBuilder: (context, index) {
-            final doctor = doctors[index];
-            return DoctorListItem(doctor: doctor);
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class DoctorListItem extends StatelessWidget {
-  final Doctor doctor;
-
-  DoctorListItem({required this.doctor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10.0),
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50.0),
-              child: Image.asset(
-                'assets/${doctor.image}',
-                width: 80.0,
-                height: 80.0,
-                fit: BoxFit.cover,
-              ),
+        body: Center(
+          child: ListView(children: const [
+            SizedBox(
+              height: 50,
             ),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    doctor.name,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Age: ${doctor.age}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  Text(
-                    'Qualifications: ${doctor.qualifications}',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ],
-              ),
+            MyExpert(
+              asset: 'assets/img1.jpeg',
+              name: 'Dr. Richard',
+              age: '40',
             ),
-            SizedBox(width: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                // Add your booking logic here
-              },
-              child: Text('Book Appointment'),
+            MyExpert(
+              asset: 'assets/img2.jpeg',
+              name: 'Dr. Paul',
+              age: '45',
             ),
-          ],
-        ),
-      ),
-    );
+            MyExpert(
+              asset: 'assets/img3.jpeg',
+              name: 'Dr. Emily',
+              age: '41',
+            ),
+            MyExpert(
+              asset: 'assets/img4.jpeg',
+              name: 'Dr. Rahul',
+              age: '49',
+            ),
+            MyExpert(
+              asset: 'assets/img5.jpeg',
+              name: 'Dr. Vijayalekshmi',
+              age: '47',
+            ),
+          ]),
+        ));
   }
 }

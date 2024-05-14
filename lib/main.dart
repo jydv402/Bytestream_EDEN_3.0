@@ -1,6 +1,5 @@
 import 'package:bytestream/home.dart';
 import 'package:bytestream/mood_track.dart';
-//import 'package:bytestream/mood_track.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
@@ -25,10 +24,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/start': (context) => const MyHomePage(),
         '/home': (context) => const HomePage(),
-        '/todo': (context) => ToDoListPage(),
+        '/todo': (context) => const ToDoListPage(),
         '/mood': (context) => const MoodTrackerHomePage(),
         '/login': (context) => LoginPage(),
-        '/dr': (context) => MyDr(),
+        '/dr': (context) => const MyDr(),
       },
       title: 'Flutter Demo',
       home: LoginPage(),
