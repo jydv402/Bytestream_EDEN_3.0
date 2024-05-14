@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+int moodEntryCount = 0;
+
 class MoodTrackerHomePage extends StatefulWidget {
   const MoodTrackerHomePage({super.key});
 
@@ -203,6 +205,34 @@ class _MoodTrackerHomePageState extends State<MoodTrackerHomePage> {
   }
 }
 
+void _showSuggestions(BuildContext context, MoodEntry moodEntry) {
+  List<String> suggestions = moodEntry.getSuggestions();
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Suggestions for ${moodEntry.mood} Mood'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: suggestions
+              .map((suggestion) => ListTile(
+                    title: Text(suggestion),
+                  ))
+              .toList(),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Close'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 class MoodEntry {
   final String mood;
   final DateTime date;
@@ -228,6 +258,41 @@ class MoodEntry {
         journalEntry = json.split(',')[2];
 
   String toJson() => '$mood,${date.toString()},$journalEntry';
+
+  List<String> getSuggestions() {
+    switch (mood) {
+      case 'Happy':
+        return [
+          "Go for a walk in nature",
+          "Call a friend or family member",
+          "Watch your favorite movie or TV show",
+          // Add more suggestions for a happy mood
+        ];
+      case 'Sad':
+        return [
+          "Listen to uplifting music",
+          "Write in a journal about your feelings",
+          "Practice deep breathing or meditation",
+          // Add more suggestions for a sad mood
+        ];
+      case 'Stressed':
+        return [
+          "Take a break and practice relaxation techniques",
+          "Exercise or go for a run",
+          "Prioritize your tasks and make a to-do list",
+          // Add more suggestions for a stressed mood
+        ];
+      case 'Anxious':
+        return [
+          "Practice mindfulness or meditation",
+          "Talk to someone you trust about your feelings",
+          "Focus on your breathing and try relaxation exercises",
+          // Add more suggestions for an anxious mood
+        ];
+      default:
+        return [];
+    }
+  }
 }
 
 class MoodEntryDetailPage extends StatelessWidget {
@@ -289,9 +354,44 @@ class MoodEntryDetailPage extends StatelessWidget {
               moodEntry.journalEntry,
               style: TextStyle(fontSize: 16),
             ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                _showSuggestions(context, moodEntry);
+              },
+              child: Text('Get Suggestions'),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showSuggestions(BuildContext context, MoodEntry moodEntry) {
+    List<String> suggestions = moodEntry.getSuggestions();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Suggestions for ${moodEntry.mood} Mood'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: suggestions
+                .map((suggestion) => ListTile(
+                      title: Text(suggestion),
+                    ))
+                .toList(),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
