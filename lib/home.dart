@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   List<ChatMessage> messages = [];
 
   ChatUser currentUser = ChatUser(id: "0", firstName: "User");
-  ChatUser geminiUser = ChatUser(
+  ChatUser lina = ChatUser(
     id: "1",
     firstName: "Lina",
     profileImage:
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       )
           .listen((event) {
         ChatMessage? lastMessage = messages.firstOrNull;
-        if (lastMessage != null && lastMessage.user == geminiUser) {
+        if (lastMessage != null && lastMessage.user == lina) {
           lastMessage = messages.removeAt(0);
           String response = event.content?.parts?.fold(
                   "", (previous, current) => "$previous ${current.text}") ??
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                   "", (previous, current) => "$previous ${current.text}") ??
               "";
           ChatMessage message = ChatMessage(
-            user: geminiUser,
+            user: lina,
             createdAt: DateTime.now(),
             text: response,
           );
