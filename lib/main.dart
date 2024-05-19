@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/dr': (context) => const MyDr(),
         '/load': (context) => const LoadingPage(),
       },
-      title: 'Flutter Demo',
+      title: 'Nirvana',
       home: LoginPage(),
     );
   }
